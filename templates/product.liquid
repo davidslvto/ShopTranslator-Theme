@@ -1,0 +1,152 @@
+{% assign c_handle = collection.handle %}
+{% assign prod = 'title' %}
+<div id="added-box-wrapper" style="display:none;">
+    <div id="added-box"></div>
+</div>
+
+<div id="product-photos">
+    <div class="first-image">
+        <a href="{{ product.images.first | product_img_url: 'large' }}" class="fancybox" ><img src="{{ product.images.first | product_img_url: 'medium' }}"  /></a>
+    </div>
+	<ul> 
+	{% for image in product.images %}
+    <li {% cycle '', "class='no-push'" %}><a href="{{ image | product_img_url: 'large' }}" class="fancybox" ><img  src="{{ image | product_img_url: 'small' }}" alt="{{ product.title | escape }}" /></a></li>
+    {% endfor %} 
+	</ul>
+</div>
+
+
+<div id="product-description">
+  
+	<h2 class="title">{% include 'translations' with prod %}</h2>  
+	
+	<div class="dotted-divider"></div>
+	
+  {% if product.available %}    
+
+
+  {% assign prod = null%}
+  
+  {%  if product.variants.size > 1  %}     
+  <form action="/cart/add" method="post">
+    <div id="product-variants">
+      <select id="product-select" name='id'>
+        {% assign variant = 'title' %}
+        {% for item in product.variants %}
+        <option value="{{ item.id }}">{% include 'translations' with variant %}</option>
+        {% endfor %}
+        {%assign variant = null%}
+      </select>   
+    </div><!-- product variants -->  
+    <div class="dotted-divider"></div>
+		<div class="current-price">
+			<div class="variant-price price">
+        <div class="price-field"></div>
+      </div>
+		</div>
+		<input type="submit" class="large button main" name="add" value="{% assign value = 'add_to_cart'%}{% include 'translations'%}{% assign value = null%}" id="purchase" />
+  </form>
+
+
+  {% else %}  
+  <form action="/cart/add" method="post">
+	  <div id="product-variants">
+    </div><!-- product variants -->  
+    <input  type="hidden" id="{{ variant.id }}" name="id" value="{{ product.variants[0].id }}" />
+		<div class="current-price">{{ product.price | money_with_currency }}</div>
+		<input type="submit" class="large button main" name="add" value="Add to Shopping Cart" id="purchase" />
+  </form>
+  {% endif %}
+
+
+  {% else %}
+  
+  <p><strong>{%assign value = 'unavailable'%}{%include 'translations'%}{%assign value = null%}</strong></p>
+  {% endif %}
+
+	<div style="clear: both;"></div>
+	
+    {% assign prod = "description" %}
+	<p>{% include 'translations' with prod %}{%assign prod = null%}</p>
+	
+	<div class="dotted-divider"></div>
+	
+    <div class="see-more"><p>&lsaquo; {%assign value = 'see_more'%}{% include 'translations'%}{% assign value = null%} {{ product.type | link_to_type }}. </p></div>
+	
+	
+</div>
+
+
+
+<script type="text/javascript">
+// <![CDATA[  
+var selectCallback = function(variant, selector) {
+  if (variant && variant.available == true) {
+    // selected a valid variant
+    jQuery('#purchase').removeClass('disabled').removeAttr('disabled'); // remove unavailable class from add-to-cart button, and re-enable button
+    jQuery('.current-price').html(Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}"));  // update price field
+  } else {
+    // variant doesn't exist
+    jQuery('#purchase').addClass('disabled').attr('disabled', 'disabled');      // set add-to-cart button to unavailable class and disable button
+    sold_out = {% assign value = "sold-out" %}"{% include 'translations' with value %}";
+    unavailable = {% assign value = "unavailable" %}"{% include 'translations' with value %}";
+	{% assign value = null %}
+	var message = variant ? sold_out : unavailable;
+	$(".current-price").text(message);
+  }
+};
+
+$(function() {
+	myJSONProduct = {{ product | json }};
+					
+	{% if cart.attributes.locale != null %}
+	// start variant text translation
+    	{% for item in product.variants %}
+		$.each( myJSONProduct.variants, function(i, l){
+			if( myJSONProduct.variants[i].id == {{ item.id }}){
+	    		{% for o in item.options %}
+		    		{% capture variant %}option{{forloop.index}}{%endcapture%}
+			    	var text = '{{ item.metafields[cart.attributes["locale"]].[variant] }}';
+				   	myJSONProduct.variants[i].option{{forloop.index}} = text;
+					myJSONProduct.variants[i].options[{{forloop.index0}}] = text;
+				{% endfor %}
+			}
+		});
+		{% endfor %}
+		// end variant text translation
+		
+        // start product option label translation
+		{% for option in product.options %}
+			{% capture option_iteration %}option{{forloop.index}}{%endcapture%}
+			var text = '{{ product.metafields[cart.attributes["locale"]].[option_iteration] }}';
+			myJSONProduct.options[{{forloop.index0}}] = text;
+		{% endfor %}
+		// end product option label translation
+    {% endif %}
+});
+
+
+// initialize multi selector for product      
+jQuery(document).ready(function() {
+  new Shopify.OptionSelectors("product-select", { product: myJSONProduct, onVariantSelected: selectCallback });
+   {% assign found_one_in_stock = false %}
+  {% for variant in product.variants %}
+    {% if variant.available and found_one_in_stock == false %}
+      {% assign found_one_in_stock = true %}
+      {% for option in product.options %}
+        jQuery('.single-option-selector:eq(' + {{ forloop.index0 }} + ')').val({{ variant.options[forloop.index0] | json }}).trigger('change');
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  $('#product-variants div').addClass("selector-wrapper");
+  $('#product-variants div label').css("float","left");  
+  $('#product-variants div select').css("float","right");
+  $('#product-variants div ').addClass("clearfix").css("clear","both");
+    {% if product.options.size == 1 %}
+        $(".selector-wrapper").append("<label>" + myJSONProduct.options[0] + ":</label>")
+    {% endif %}
+});                         
+
+// ]]>
+</script>
+

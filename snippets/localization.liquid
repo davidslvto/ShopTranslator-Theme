@@ -1,0 +1,29 @@
+{{ "http://cdn.shopify.com/s/shopify/api.jquery.js", | script_tag }}
+{{ "attributes.js" | asset_url | script_tag }}
+{% for item in shop.metafields.locale_initializer %}
+{% assign variant_id = item.last %}
+{% endfor %}
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        Shopify.initializeCart({{ variant_id }});
+        jQuery("a.locale").click(function(e){
+            loc = jQuery(this).attr("id");
+            Shopify.updateCartAttributes({"locale": loc}, function(){
+                window.location.href = "/?locale="+loc;
+            });
+        });    
+        jQuery.each(jQuery("a"), function(index, value){
+            {% if cart.attributes.locale != null %}
+            str = $(this).attr("href");
+            if(str != null){
+                if(str.indexOf('?') == -1){
+                    str = str.concat("?locale={{cart.attributes.locale}}");
+                } else {
+                    str = str.concat("&locale={{cart.attributes.locale}}");
+                }
+                $(this).attr("href", str);
+            }
+            {% endif %}
+        });
+    });
+</script>

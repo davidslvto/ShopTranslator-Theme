@@ -1,0 +1,9 @@
+<div id="full-width">
+{% assign p_handle = page.handle %}
+{% assign page_tr = 'title' %}
+<h2>{% include 'translations' %}</h2>
+{% assign page_tr = 'description' %}
+{% include 'translations' %}
+{% assign page_tr = null %}
+{% assign p_handle = null %}
+</div>

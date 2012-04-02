@@ -1,0 +1,7 @@
+img { border: none; }
+
+ul, ol { margin-right: 0;}
+ul#top-right-list { margin-right: 1.5em; }
+
+#fancy_overlay { line-height: 0; font-size: 0; }
+#sidebar-blog #feed { line-height: 24px; }

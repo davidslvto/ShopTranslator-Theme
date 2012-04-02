@@ -1,0 +1,113 @@
+<!--begin left-column--> 
+<div id="left-column">
+
+	<div class="blog-post">
+	
+	<div class="article">
+  	<div>
+    	<p class="user"></p>
+			<h2 class="blog-post-title">{{ article.title }}</h2>
+    	<h3 class="blog-post-date"><p>by {{ article.author }} on {{ article.created_at | date: "%B %d, %Y" }}</p></h3>
+			<div class="textile">
+		  	{{ article.content }}
+			</div>
+  	</div>
+  		
+	</div>
+
+{% if blog.comments_enabled? %}
+<div id="comments">
+  <h4 class="blog-secondary-title">Comments</h4>
+  <!-- List all comments -->
+
+  {% if article.comments == empty %}
+    <p class="box"><em>There are no comments yet</em></p>
+  {% else %}
+    <ul class="inner">
+    {% for comment in article.comments %}
+      <li>
+        <div class="comment">
+          {{ comment.content }}
+        </div>
+      
+    	  <div class="comment-details">
+    		  <em>Posted by {{ comment.author }} on {{ comment.created_at | date: "%B %d, %Y" }}</em>
+        </div>
+
+				<div class="dotted-divider"></div>
+				
+    	</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  
+  <!-- Comment Form -->
+  {% form article %}
+    <h4 class="blog-secondary-title">Leave a comment</h4>
+    
+    <!-- Check if a comment has been submitted in the last request, and if yes display an appropriate message -->
+    {% if form.posted_successfully? %}
+      {% if blog.moderated? %}
+        <div class="box">
+          Successfully posted your comment.<br />
+          It will have to be approved by the blog owner first before showing up.
+        </div>
+      {% else %}
+        <div class="notice">Successfully posted your comment.</div>
+      {% endif %}
+    {% endif %}
+    
+    {% if form.errors %}
+      <div class="notice error">Not all the fields have been filled out correctly!</div>
+    {% endif %}
+    
+    <table>
+      <tr>
+        <td>
+          <dl>
+            <dt class="{% if form.errors contains 'author' %}error{% endif %}"><label for="comment_author">Your name</label></dt>
+            <dd class="field-padding"><input type="text" id="comment_author" name="comment[author]" value="{{form.author}}" class="{% if form.errors contains 'author' %}input-error{% endif %}" /></dd>
+
+            <dt class="{% if form.errors contains 'email' %}error{% endif %}"><label for="comment_email">Your email</label></dt>
+            <dd class="field-padding"><input type="text" id="comment_email" name="comment[email]" value="{{form.email}}" class="{% if form.errors contains 'email' %}input-error{% endif %}" /></dd>
+          </dl>
+        </td>
+			</tr>
+      <tr>
+	 			<td>
+          <dl>
+            <dt class="{% if form.errors contains 'body' %}error{% endif %}"><label for="comment_body">Your comment</label></dt>
+            <dd class="field-padding"><textarea id="comment_body" name="comment[body]" cols="50" rows="5" class="{% if form.errors contains 'body' %}input-error{% endif %}">{{form.body}}</textarea></dd>
+          </dl>
+        </td>
+      </tr>
+    </table>
+    
+    {% if blog.moderated? %}
+      <p class="hint alt">Comments have to be approved before showing up</p>
+    {% endif %}    
+    <div id="submit-comment">
+      <input type="submit" class="large button main"value="Post Comment" /><br /><br />
+    </div>
+  {% endform %}
+</div>
+{% endif %}
+
+</div>
+
+</div>
+<!--end left-column-->
+
+<!--begin right-column--> 
+<div id="right-column">
+	
+	<h2 class="right-column-heading"><a class="rss-icon" href="{{ blog.url }}.atom"><img src="{{ 'icon-rss.png' | asset_url }}" width="16" height="16" alt="RSS Feed"></a>Recent Posts</h2>	
+	
+	{% for article in blog.articles limit:7 %}
+	<ul>
+		<li><a href="{{ article.url }}">{{ article.title }}</a></li>
+	</ul>
+	{% endfor %}
+	
+</div>
+<!--end right-column-->

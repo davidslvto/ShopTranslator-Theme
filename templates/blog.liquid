@@ -1,0 +1,53 @@
+<!--begin left-column--> 
+<div id="left-column">
+		
+	{% paginate blog.articles by 5 %}
+		{% for article in blog.articles %}
+		<a name="article-{{ article.id }}"></a>
+
+		<div class="article {% if forloop.first %}first{% endif %}">
+    	<div class="blog-post">
+				<div>
+      	<p class="user"></p>
+  			<h2 class="blog-post-title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+      	<h3 class="blog-post-date"><p>by {{ article.author }} on {{ article.created_at | date: "%B %d, %Y" }} {% if blog.comments_enabled? %}<a class="comments" href="{{article.url}}#comments">Comments ({{ article.comments_count }})</a>{% endif %}</p></h3>
+				<div class="textile">
+  		  	{{ article.content }}
+  			</div>
+    	</div>
+    
+  		<div class="blog-details">
+      		<ul>
+						<li class="continue"><a href="{{ article.url }}">Continue Reading</a></li>
+					</ul>
+  		</div>
+			<div style="clear: both"></div>
+			</div>
+			</div>
+
+			{% endfor %}
+	
+			{% if paginate.pages > 1 %}
+			<div class="pagination">
+					{{ paginate | default_pagination }}
+			</div>
+			{% endif %}
+
+	{% endpaginate %}
+
+</div>
+<!--end left-column-->
+
+<!--begin right-column--> 
+<div id="right-column">
+	
+	<h2 class="right-column-heading"><a class="rss-icon" href="{{ blog.url }}.atom"><img src="{{ 'icon-rss.png' | asset_url }}" width="16" height="16" alt="RSS Feed"></a>Recent Posts</h2>
+	
+	{% for article in blog.articles limit:7 %}
+	<ul>
+		<li><a href="{{ article.url }}">{{ article.title }}</a></li>
+	</ul>
+	{% endfor %}
+	
+</div>
+<!--end right-column-->

@@ -1,0 +1,18 @@
+{% if shop.metafields.default_locale != "" %}
+    <li {% if cart.attributes.locale == null %} class="active"{% endif %}>
+        <a href="#" class="locale {{ shop.metafields.default_locale.first.first | downcase | escape }}" id="">{{ shop.metafields.default_locale.first.first }}</a>
+    </li>
+    {% if cart.attributes.locale == null %}
+    {% capture current_locale %}{{ shop.metafields.default_locale.first.first }}{% endcapture %}
+    {% endif %}
+{% endif %}
+{% for locale in shop.metafields.locale %}
+    {% if locale.last == "Active" %}
+    <li {% if cart.attributes.locale == locale.first %} class="active"{% endif %}>
+        <a href="#" rel="?l={{locale.first}}" class="locale {{ locale.first | downcase | escape }}" id="{{ locale.first | downcase | escape }}">{{ locale.first }}</a>
+    </li>
+        {% if cart.attributes.locale == locale.first %}
+            {% capture current_locale %}{{ cart.attributes.locale }}{% endcapture %}
+        {% endif %}
+    {% endif %}
+{% endfor %}

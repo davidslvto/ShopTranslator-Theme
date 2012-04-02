@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>{{ shop.name }} &mdash; {{ page_title }}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+{{ 'stylesheet.css' | asset_url | stylesheet_tag }}{% if template contains 'customers' %}
+{{ 'customer.css' | asset_url | stylesheet_tag }}{% endif %}
+
+<!--[if IE]>
+{{ 'ie.css' | asset_url | stylesheet_tag }}
+<![endif]-->
+
+<!--[if IE 7]>
+{{ 'ie7.css' | asset_url | stylesheet_tag }}
+<![endif]-->
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+{{ 'modernizr.js' | asset_url | script_tag }}
+
+{{ 'fancybox.js' | asset_url | script_tag }}
+{{ 'fancy.css'  | asset_url | stylesheet_tag }}
+{{ 'option_selection.js' | asset_url | script_tag }}
+{{ 'gallery.min.js' | asset_url | script_tag }}
+
+{% if template contains 'customers' %}
+    {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+    {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+{% endif %}
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $("a.fancybox").fancybox({'overlayShow':	true});
+  });
+</script>
+
+{{ content_for_header }}
+
+{% include 'localization' %}
+</head>
+
+<body>
+{% include 'locales' %}
+<!--begin header-wrapper-->
+<div id="wrap">
+<!-- null the variables at the beginning -->
+
+
+
+	<div id="header-wrapper">
+
+  <!--begin header-->
+	<div id="header" class="clearfix">
+    
+		<!--begin logo-->
+		<div id="logo">	
+			{% if settings.use_logo_image == true %}<a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" /></a>
+				{% else %} 
+			<h1><a href="/">{{ shop.name }}</a></h1>
+			{% endif %}
+		</div>
+		<!--end logo-->
+		
+		<!--begin toolbar-->
+		<div id="toolbar">
+			
+			<ul class="toolbar-checkout">
+                {% assign value = 'checkout' %}
+				<li><a class="large button secondary" href="/checkout">{% include 'translations' with value %}</a></li>
+			</ul>
+			
+            <!-- TRADUZIR -->
+			<ul class="toolbar-cart">
+                {% assign value = 'cart_text'%}
+				<li>{% include 'translations' with value %}: <span class="toolbar-cart-count">
+					<a href="/cart">
+                    {% if cart.item_count > 1 %}
+                        {{ cart.item_count}}&nbsp;{% assign value = 'items_text' %}{% include 'translations' %}
+					{% elsif cart.item_count == 1 %}
+			      	    {{ cart.item_count}}&nbsp;{% assign value = 'item_text' %}{% include 'translations' %}
+			    	{% else %}
+			      	    {{ cart.item_count}}&nbsp;{% assign value = 'items_text' %}{% include 'translations' %}
+			    	{% endif %}
+                    {% assign value = null %}
+					</a></span>
+				</li>
+				<li>
+				    {% if shop.customer_accounts_enabled %}
+                      {% if customer  %}
+                      <!-- TRADUZIR -->
+                        <a href="/account">Welcome {{customer.first_name}}</a> | {{ "Logout" | customer_logout_link }}
+                      {% else %}
+                        {{ "Login" | customer_login_link }}
+                      {% endif %}
+                    {% endif %}
+				</li>
+			</ul>
+			
+		</div>
+		<!--end toolbar-->
+		
+		<!--begin main-navigation-->
+		<div id="main-navigation">
+			<ul>
+				{% for link in linklists.main-menu.links %}
+					<li {% if link.active %} class="current"{% endif %}>
+                        <a href="{{ link.url }}">
+                            {% include 'translations' with link.title %}
+                        </a>
+                    </li>
+                {% endfor %}
+			</ul>
+		</div>
+		<div style="clear: both"></div>
+		<!--end main-navigation-->
+
+  </div>
+	<!--end header-->
+	
+</div>
+<!--end header-wrapper-->
+
+{% if template == "index" %}
+	{{ content_for_layout }}
+{% endif %}
+
+{% if template != "index" %}
+	
+	<!--begin sub-banner-wrapper-->
+	<div id="sub-banner-wrapper">
+
+		<div id="sub-banner">
+
+			<div id="home-banner-content">
+				<h2 class="title">
+                
+                {% if template contains "blog" %}
+                    {% assign value = 'blog-news' %}{% include 'translations' %}{% assign value = null %}
+                {% elsif template contains "collection" %}
+                    {% assign value = 'products' %}{% include 'translations' %}{% assign value = null %}
+                {% elsif template contains "page" %}
+                    {% assign p_handle = page.handle%}
+                    {% assign page_tr = 'title' %}
+                    {% include 'translations' with page_tr %}
+                    {% assign page_tr = null %}
+                    {% assign p_handle = null %}
+                {% elsif template == "cart" %}
+                    {% assign value = 'your_shop_cart' %}{% include 'translations' %}{% assign value = null %}
+                {% elsif template contains "product" %}
+                    {% assign prod = "title" %}
+                    {% include 'translations' with prod %}
+                    {% assign prod = null %}
+                {% else %}
+                    {{ page_title | escape}}
+                {% endif %}
+				</h2>
+                <!-- -->
+				
+                <ul class="breadcrumb">
+					<li><a href="/" title="Back to the frontpage">{% assign value = 'home' %}{% include 'translations' %}{% assign value = null %}</a></li>
+					<li class="current">
+					{% if template contains "product" %}
+					{% if collection.url %}            
+	          	    <li><a href="{{collection.url}}">{% assign value = 'products'%}{% include 'translations' with value%}{% assign value = null%}</a></li>
+	                {% endif %}
+	          	    <li class="no-arrow">
+                      {% assign prod = 'title' %}
+                      <a href="">{% include 'translations' with prod%}</a>
+                     </li>
+	        	    {% elsif template contains "collection" %}
+	                <li class="no-arrow">
+                        <a href="{{collection.url}}">{% assign value = 'products'%}{% include 'translations' with value%}{% assign value = null%}</a>
+                    </li>         
+	        	    {% elsif template contains "blog" %}
+					<li class="no-arrow">
+                        <a href="{{blog.url}}">{% assign value = 'blog-news'%}{% include 'translations' with value %}{%assign value = null%}</a>
+                    </li>
+	        	    {% elsif template contains "page" %}
+                    {% assign p_handle = page.handle%}
+	                <li class="no-arrow">
+                     <a href="{{page.url}}">{% assign page_tr = 'title' %}{% include 'translations'%}{%assign page_tr = null%}</a>
+                    </li>
+	        	    {% elsif template contains "article" %}
+	                <li class="no-arrow">{{ blog.title | link_to: blog.url }}</li>
+	        	    {% elsif template == "cart" %}
+	                <li class="no-arrow"><a href="/cart">{% assign value = 'shopping_cart'%}{% include 'translations' %}{% assign value = null %}</a></li>
+					{% else %}
+		            <li class="no-arrow">{{ page_title }}</li>
+				    {% endif %}
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+	<!--end sub-banner-wrapper-->
+
+	<!--begin content-wrapper-->
+	<div id="content-wrapper">    
+
+        {% unless template contains 'customers' %}
+		<div id="search">
+			<form action="/search" method="get">
+				<input type="text" name="q" id="q" class="search-field" />
+				<input type="image" src="{{ 'btn-search.png' | asset_url }}" class="search-button" name="search-button" onclick="if( this.value == 'Search...' ) {this.value = '';};" id="seek" />
+			</form>
+		</div>
+        {% endunless %}
+		
+		{{ content_for_layout }}
+		{% endif %}	
+		
+	</div>
+</div>
+<!--end content-wrapper-->
+ 
+<!--begin footer-->
+<div id="footer">
+	
+	<div id="footer-content">
+		
+        <div class="copyright clearfix">
+
+        <p>
+        {% for link in linklists.footer.links %}
+
+          {{ link.title | link_to: link.url }} <span style="color:gray; padding:0 5px">|</span>{% endfor %} 
+
+          Copyright &copy; {{ "now" | date: "%Y" }} {{ shop.name }}.
+
+          {% if settings.include_shopifylink %}{{ powered_by_link }}{% endif %}
+        </p>
+
+      </div><!-- .clearfix -->
+
+		
+		{% if settings.enable_creditcards %}
+    <ul class="credit-cards">
+      {% if settings.show_visa %}
+      <li>{{ 'icon-visa.png' | asset_url | img_tag }}</li>
+      {% endif %}
+
+      {% if settings.show_paypal %}
+      <li>{{ 'icon-paypal.png' | asset_url | img_tag }}</li>
+      {% endif %}
+
+      {% if settings.show_discover %}
+      <li>{{ 'icon-discover.png' | asset_url | img_tag }}</li>
+      {% endif %}
+
+      {% if settings.show_mastercard %}
+      <li>{{ 'icon-mastercard.png' | asset_url | img_tag }}</li>
+      {% endif %}
+
+      {% if settings.show_amex %}
+      <li>{{ 'icon-ae.png' | asset_url | img_tag }}</li>
+      {% endif %}
+    </ul>
+    {% endif %}
+	</div>
+	
+</div>
+<!--end footer--> 
+
+<script>
+  jQuery('.cy').load(function() {
+    var h = Math.round(jQuery(this).height() / 2);
+    var ph = Math.round(jQuery(this).parent().height() / 2);
+    jQuery(this).css('paddingTop', ph - h);
+  });
+</script>
+
+</body>
+</html>

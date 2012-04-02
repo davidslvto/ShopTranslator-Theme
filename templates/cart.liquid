@@ -1,0 +1,84 @@
+<div id="full-width">
+	
+<div id="cart">
+    {% assign value = 'my_cart'%}
+	<h2>{% include 'translations' with value%}</h2>{% if cart.item_count > 0 %}
+	<form action="/cart" method="post" name="cartform">
+	
+	<!-- begin table -->
+	<table cellpadding="0" cellspacing="0">
+		
+		<!-- begin headers -->
+		<tr>
+            {% assign value = 'cart_description'%}
+			<th colspan="2" class="start">{% include 'translations' %}</th>
+            {% assign value = 'cart_price'%}
+			<th>{% include 'translations' %}</th>
+            {% assign value = 'cart_quantity'%}
+			<th>{% include 'translations' %}</th>
+            {% assign value = 'cart_delete'%}
+			<th>{% include 'translations' %}</th>
+			<th>Total</th>
+            {% assign value = 'null'%}
+		</tr>
+		<!-- end headers -->{% for item in cart.items %}
+		
+		<!-- start product {{ forloop.index }} -->
+		<tr class="{% cycle "odd", "even" %}">
+			<td class="pic">
+				<div><a href="{{ item.product.url | within: collections.all }}"><img src="{{ item.product.images[0] | product_img_url: "thumb" }}" alt="{{ item.title | escape }}" /></a></div>
+			</td>
+			<td class="title">
+				<h3 class="title"><a href="{{ item.product.url | within: collections.all }}">{% assign cart_variant = 'product-title' %}{% include 'translations' %}{% assign cart_variant = 'null'%}</a></h3>
+			</td>
+			<td>{{ item.price | money }}</td>
+			<td><input type="text" class="field" name="updates[{{ item.id }}]" id="updates_{{ item.id }}" value="{{ item.quantity }}" /></td>
+			<td class="remove"><a href="/cart/change/{{ item.variant.id }}?quantity=0">{% assign value = 'cart_delete'%}{% include 'translations' %}{% assign value = null %}</a></td>
+			<td><strong>{{ item.line_price | money }}</strong></td>
+		</tr>
+		<!-- End product {{ forloop.index }} -->{% endfor %}
+	
+	</table>
+	<!-- end table -->
+	
+	<!-- start complete -->
+	<div id="complete" class="clear">
+		
+		{% if settings.notes %}
+    		<!-- Begin notes -->
+    		<div id="notes" class="indent">
+    			<label for="note">{% assign value ="cart_notes"%}{% include 'translations'%}{% assign value = null%}:</label>
+    			<textarea name="note" id="note" rows="" cols="">{{ cart.note }}</textarea>
+    		</div>
+    		<!-- End notes -->
+    	{% endif %}
+		
+		<!-- start total -->
+		<div id="total">
+			<p class="cart-total">Total: <span>{{ cart.total_price | money }}</span><div style="clear: both;"></div></p>
+			
+			<!-- start checkout -->
+			<div id="checkout" class="clear">
+                {% assign value = 'checkout'%}
+    			<input type="submit" class="large button main" alt="Checkout" name="checkout" value="{% include 'translations' %}"/>
+                {% assign value = 'null'%}
+                {% assign value = 'cart_update'%}
+    			<input type="submit" class="large button secondary" alt="Update" name="update" class="update" value="{% include 'translations' %}" />
+			    {% assign value = 'null'%}
+			    <div class="additional-checkout-buttons" style="">{% if additional_checkout_buttons %}{{ content_for_additional_checkout_buttons | google_button_options: 'transparent' }}{% endif %}</div>
+                
+			</div>
+			<!-- end checkout -->
+			
+		</div>
+		<!-- end total -->
+		
+	</div>
+	<!-- end complete-->
+	
+</form>{% else %}
+<p id="empty">Your shopping cart is empty. <a href="/collections/all">Continue shopping...</a></p>{% endif %}
+
+</div>
+
+</div>

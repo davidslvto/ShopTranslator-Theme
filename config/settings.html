@@ -1,0 +1,310 @@
+<div class="section-info">
+    <h3>Instructions - Read This First</h3>
+    <p>Below you will find several sections for setting up the Monochrome theme. There are sensible defaults for all settings, but you should still look through all settings carefully. The documentation for the Monochrome theme is found at <a href="http://j.mp/pJukIt" target="_blank">http://j.mp/pJukIt</a>.</p>
+</div>
+
+	<fieldset>
+	<legend>Logo</legend>
+	  <table>
+	    <tr>
+	      <td><label for="use_logo_image">Use a custom site logo?</label></td>
+	      <td><input type="checkbox" id="use_logo_image" name="use_logo_image" data-max-height="135" data-max-width="480"/></td>
+	    </tr>
+	    <tr>
+	      <td><label for="logo_image">Site logo</label></td>
+	      <td>
+	        <select name="logo_image" id="logo_image">
+	          <option value="logo.png" selected='selected'>logo.png</option>
+	        </select>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td><label for="logo_image_upload">Upload a new site logo</label></td>
+	      <td>
+	        <input type="file" id="logo_image_upload" name="logo.png" data-max-width="455" data-max-height="400" />
+	      </td>
+	    </tr>    
+	  </table>
+	</fieldset>
+	
+	<fieldset>
+	<legend>Home Page</legend>
+  <table>
+   <tr>
+    	  <td><label for="home_collections_featured">Feature collections on home page?</label></td>
+		  <td><input type="checkbox" id="home_collections_featured" name="home_collections_featured" value="0" /></td>
+	</tr>
+    <tr>
+          <td><label for="home_collections_featured_linklist">What linklist shows your featured collections?</label></td>
+          <td><select id="home_collections_featured_linklist" class="linklist" name="home_collections_featured_linklist" value="None" /></td>
+    </tr>
+    <tr>
+		  <td><label for="home_banner">Enable homepage banner?</label></td>
+		  <td><input type="checkbox" id="home_banner" name="home_banner" value="1" /></td>
+	</tr>
+    <tr>
+		  <td><label for="home_banner_title">Title text for homepage banner</label></td>
+		  <td><textarea class="text" id="home_banner_title" name="home_banner_title" value=""/></td>
+		</tr>
+		<tr>
+		  <td><label for="banner_title_color">Color of title text for homepage banner</label></td>
+		  <td><input type="text" id="banner_title_color" name="banner_title_color" class="color" value="#d9d7ad"/></td>
+		</tr>
+		<tr>
+		  <td><label for="home_banner_description">Description text for homepage banner</label></td>
+		  <td><textarea class="text" id="home_banner_description" name="home_banner_description" value=""/></td>
+		</tr>
+		<tr>
+		  <td><label for="banner_p_color">Color of description text for homepage banner</label></td>
+		  <td><input type="text" id="banner_p_color" name="banner_p_color" class="color" value="#ffffff"/></td>
+		</tr>
+		<tr>
+		  <td><label for="home_banner_button">Enable button on homepage banner?</label></td>
+		  <td><input type="checkbox" id="home_banner_button" name="home_banner_button" value="1" /></td>
+		</tr>
+		<tr>
+		  <td><label for="home_banner_button_title">Title for button on homepage banner</label></td>
+		  <td><input type="text" id="home_banner_button_title" name="home_banner_button_title" class="text" value=""/></td>
+		</tr>
+		<tr>
+		<td><label for="home_banner_img">Upload a featured image <br />(<strong>Note:</strong> transparent PNG's will look best)</label></td>
+		<td>
+		  <input type="file" id="home_banner_img" name="home-banner-img.png"  data-max-width="360" data-max-height="360" />
+		</td>
+		</tr>
+		
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>Text Colors</legend>
+  <table>
+		
+    <tr>
+      <td><label for="logo_color">Logo</label></td>
+      <td><input id="logo_color" name="logo_color" class="color" value="#ffffff" /></td>
+    </tr>
+    <tr>
+      <td><label for="highlight_color">Highlight</label><br />(<strong>Examples:</strong> main headings, <br />product titles, etc.)</td>
+      <td><input id="highlight_color" name="highlight_color" class="color" value="#ff9500" /></td>
+    </tr>
+    <tr>
+      <td><label for="alternate_color">Alternate</label><br />(<strong>Examples:</strong> secondary headings, blog titles, product links, etc.)</td>
+      <td><input id="alternate_color" name="alternate_color" class="color" value="#D9D7AD" /></td>
+    </tr>
+		<tr>
+      <td><label for="neutral_color">Neutral</label><br />(<strong>Examples:</strong> footer text, lists, <br />blog author, etc. </td>
+      <td><input id="neutral_color" name="neutral_color" class="color" value="#8695a9" /></td>
+    </tr>
+		<tr>
+      <td><label for="body_color">Body</label></td>
+      <td><input id="body_color" name="body_color" class="color" value="#ffffff" /></td>
+    </tr>
+		<tr>
+      <td><label for="body_link">Body link</label></td>
+      <td><input id="body_link" name="body_link" class="color" value="#ffffff" /></td>
+    </tr>
+		<tr>
+      <td><label for="body_link_hover">Body link hover</label></td>
+      <td><input id="body_link_hover" name="body_link_hover" class="color" value="#ffffff" /></td>
+    </tr>
+		<tr>
+      <td><label for="breadcrumb_link">Breadcrumb link</label></td>
+      <td><input id="breadcrumb_link" name="breadcrumb_link" class="color" value="#ffffff" /></td>
+    </tr>
+		<tr>
+      <td><label for="breadcrumb_link_hover">Breadcrumb link hover</label></td>
+      <td><input id="breadcrumb_link_hover" name="breadcrumb_link_hover" class="color" value="#ffffff" /></td>
+    </tr>
+ 
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>Background Colors</legend>
+  <table>
+		
+    <tr>
+      <td><label for="body_background_color">Body background color</label></td>
+      <td><input id="body_background_color" name="body_background_color" class="color" value="#1c232e" /></td>
+    </tr>
+    <tr>
+      <td><label for="mid_background_color">Mid-section background color</label></td>
+      <td><input id="mid_background_color" name="mid_background_color" class="color" value="#131820" /></td>
+    </tr>
+		<tr>
+      <td><label for="footer_background_color">Footer background color</label></td>
+      <td><input id="footer_background_color" name="footer_background_color" class="color" value="#37485c" /></td>
+    </tr>
+ 
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>Main Navigation</legend>
+
+  <table>
+    <tr>
+      <td><label for="navigation_color">Navigation color</label></td>
+      <td><input id="navigation_color" name="navigation_color" class="color" value="#E3E3E3" /></td>
+    </tr>
+		<tr>
+      <td><label for="navigation_hover_color">Navigation hover color</label></td>
+      <td><input id="navigation_hover_color" name="navigation_hover_color" class="color" value="#ffffff" /></td>
+    </tr>
+		<tr>
+    	<td><label for="navigation_align">Align navigation left or right?</label></td>
+    	<td>
+      	<select class="align" name="navigation_align" id="navigation_align">
+        	<option value="align_left">Left</option>
+					<option value="align_right" selected="selected">Right</option>
+      	</select>
+    	</td>
+  	</tr>
+	</table>
+</fieldset>
+
+<fieldset>
+  <legend>Buttons</legend>
+
+  <h3>Main Button</h3>
+	<table>
+    <tr>
+      <td><label for="main_button_bg_color">Background color</label></td>
+      <td><input id="main_button_bg_color" name="main_button_bg_color" class="color" value="#ff6a00" /></td>
+    </tr>
+    <tr>
+      <td><label for="main_button_hover_color">Hover color</label></td>
+      <td><input id="main_button_hover_color" name="main_button_hover_color" class="color" value="#ff7e14" /></td>
+    </tr>
+		<tr>
+      <td><label for="main_button_text_color">Text color</label></td>
+      <td><input id="main_button_text_color" name="main_button_text_color" class="color" value="#131820" /></td>
+    </tr>
+		<tr>
+		  <td><label for="main_button_text_shadow">Text shadow color</label></td>
+		  <td>
+		    <select name="main_button_text_shadow" id="main_button_text_shadow">
+		      <option value="1" selected="selected">White</option>
+		      <option value="2">Black</option>
+		    </select>
+		  </td>
+		</tr>
+  </table>
+
+	<h3>Alternate Button</h3>
+	<table>
+    <tr>
+      <td><label for="secondary_button_bg_color">Background color</label></td>
+      <td><input id="secondary_button_bg_color" name="secondary_button_bg_color" class="color" value="#3f4e60" /></td>
+    </tr>
+    <tr>
+      <td><label for="secondary_button_hover_color">Hover color</label></td>
+      <td><input id="secondary_button_hover_color" name="secondary_button_hover_color" class="color" value="#4f6279" /></td>
+    </tr>
+		<tr>
+      <td><label for="secondary_button_text_color">Text color</label></td>
+      <td><input id="secondary_button_text_color" name="secondary_button_text_color" class="color" value="#ffffff" /></td>
+    </tr>
+		<tr>
+		  <td><label for="alt_button_text_shadow">Text shadow color</label></td>
+		  <td>
+		    <select name="alt_button_text_shadow" id="alt_button_text_shadow">
+		      <option value="1">White</option>
+		      <option value="2" selected="selected">Black</option>
+		    </select>
+		  </td>
+		</tr>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>Typography</legend>
+  <table>
+		<tr>
+      <td><label for="header_font">Headers</label></td>
+      <td>
+        <select class="font" name="header_font" id="header_font">
+          <option value="Helvetica, Arial, sans-serif" selected="selected">Helvetica/Arial</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="regular_font">Regular text</label></td>
+      <td>
+        <select class="font" name="regular_font" id="regular_font">
+          <option value="Helvetica, Arial, sans-serif" selected="selected">Helvetica/Arial</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>Footer</legend>
+  <table>
+     <tr>
+        <td><label for="enable_creditcards">Show Credit Card icons? </label></td>
+        <td><input type="checkbox" id="enable_creditcards" name="enable_creditcards" value="1" checked="checked"/></td>
+      </tr>
+    <tr>
+      <td><label for="show_visa">Show Visa </label></td>
+      <td><input type="checkbox" id="show_visa" name="show_visa" value="1" checked="checked"/></td>
+    </tr>
+    <tr>
+      <td><label for="show_mastercard">Show mastercard </label></td>
+      <td><input type="checkbox" id="show_mastercard" name="show_mastercard" value="1" checked="checked"/></td>
+    </tr>
+    <tr>
+      <td><label for="show_discover">Show discover </label></td>
+      <td><input type="checkbox" id="show_discover" name="show_discover" value="1" checked="checked"/></td>
+    </tr>
+    <tr>
+      <td><label for="show_amex">Show amex </label></td>
+      <td><input type="checkbox" id="show_amex" name="show_amex" value="1" checked="checked"/></td>
+    </tr>
+    <tr>
+      <td><label for="show_paypal">Show paypal </label></td>
+      <td><input type="checkbox" id="show_paypal" name="show_paypal" value="1" checked="checked"/></td>
+    </tr>
+    <tr>
+      <td><label for="include_shopifylink">Show "built with Shopify?" </label></td>
+      <td><input type="checkbox" id="include_shopifylink" name="include_shopifylink" value="1" checked="checked"/></td>
+    </tr>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>Cart</legend>
+  <table>
+      <tr>
+        <td><label for="notes">Enable note field</label></td>
+        <td><input type="checkbox" id="notes" name="notes" value="1" checked="checked"/></td>
+      </tr>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>Product Tags</legend>
+  <table>
+      <tr>
+        <td><label for="product_tags">Enable product tags (collection page)</label></td>
+        <td><input type="checkbox" id="product_tags" name="product_tags" value="1" checked="checked"/></td>
+      </tr>
+      <tr>
+        <td><label for="product_tags_text_color">Text color</label></td>
+        <td><input id="product_tags_text_color" name="product_tags_text_color" class="color" value="#FFFFFF" /></td>
+      </tr>
+      <tr>
+          <td><label for="product_tags_background_color">Background bubble color</label></td>
+          <td><input id="product_tags_background_color" name="product_tags_background_color" class="color" value="#131820" /></td>
+        </tr>
+  </table>
+</fieldset>
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+{% paginate collection.products by 16 %}
+
+<div id="featured-products">
+	
+	<h3 class="featured-products-title">
+    {% if collection.title == 'Products'%}
+        {% assign value = 'products'%}{% include 'translations'%}{% assign value = null%}
+    {%else%}{{ collection.title }}{% endif%}</h3>
+	
+	{% if settings.product_tags %}
+	    {% if collection.all_tags and collection.all_tags.size != 0 %}
+        <ul class="product-tag">
+	       <li class="product-tag-title">{% assign value ='product_tags'%}{%include 'translations' %}{% assign value = null %}:</li>
+	       {% for tag in collection.all_tags %}
+	       <li class="product-tag-item">{{ tag | link_to_tag: tag }}</li>
+           {% endfor %}
+	    </ul>
+	    {% endif %}
+	{% endif %}
+	
+	{% if collection.description %}
+	<div id="catalog-description">
+		<p>{{ collection.description }}</p>
+	</div>
+	{% endif %}
+	
+	{% if collection.products.size == 0 %}
+		<strong>No products found in this collection.</strong>
+		{% else %}		
+
+		<table cellpadding="0" cellspacing="0">
+        
+  		{% tablerow product in collection.products cols: 4 %}      
+  			<ul class="featured-product">
+			    <li>
+                    <a href="{{ product.url | within: collection }}">
+                        <span class="product-image-wrapper"><img class="product-image cy" src="{{ product.images.first | product_img_url: 'compact' }}" alt="{{ product.title | escape }}" /></span>
+                        <span class="product-name">{% assign prod = 'title' %}{% include 'translations' with prod %}{% assign prod = null%}</span>
+                        <span class="featured-price">{% if product.compare_at_price_max > product.price %}<em>was {{ product.compare_at_price_max | money }}</em>{% endif %}<strong>{{ product.price  | money }}</strong></span><br /><span class="small button details">{% assign value ='btn_details'%}{%include 'translations'%}{% assign value = null%}</span>
+                    </a>
+                </li>
+			  </ul>
+  		{% endtablerow %}
+
+		</table>
+	
+			{% if paginate.pages > 1 %}
+  		<div id="pagination">
+  			<ul>
+  				<li>{{ paginate | default_pagination }}</li>
+  			</ul>
+  		</div>
+			{% endif %}
+
+	{% endif %}
+
+</div>
+{% endpaginate %}
